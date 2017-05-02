@@ -2,6 +2,8 @@
 title: About Us
 component: ContentPage
 ---
+(src/routes/about/about.md)
+
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consequat
 tortor fermentum mi fermentum dignissim. Nullam vel ipsum ut ligula elementum
 lobortis. Maecenas aliquam, massa laoreet lacinia pretium, nisi urna venenatis

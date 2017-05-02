@@ -1,12 +1,3 @@
-/**
- * React Starter Kit (https://www.reactstarterkit.com/)
- *
- * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
-
 import path from 'path';
 import fetch from 'node-fetch';
 import { writeFile, makeDir } from './lib/fs';
@@ -53,7 +44,7 @@ async function render() {
     await makeDir(dirName);
     await writeFile(dist, text);
     const time = timeEnd.getTime() - timeStart.getTime();
-    console.log(`#${index + 1} ${dist} => ${response.status} ${response.statusText} (${time} ms)`);
+    console.info(`#${index + 1} ${dist} => ${response.status} ${response.statusText} (${time} ms)`);
   }));
 
   server.kill('SIGTERM');
