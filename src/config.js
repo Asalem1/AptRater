@@ -37,8 +37,8 @@ module.exports = {
 
     // https://cloud.google.com/console/project
     google: {
-      id: process.env.GOOGLE_CLIENT_ID || '251410730550-ahcg0ou5mgfhl8hlui1urru7jn5s12km.apps.googleusercontent.com',
-      secret: process.env.GOOGLE_CLIENT_SECRET || 'Y8yR9yZAhm9jQ8FKAL8QIEcd',
+      id: process.env.GOOGLE_CLIENT_ID || '587623544650-j55nt6u97inie09khns4dt5lhj1daa3s.apps.googleusercontent.com',
+      secret: process.env.GOOGLE_CLIENT_SECRET || 'TGPJi3k1E6CqR4MreDfbwVac',
     },
 
     // https://apps.twitter.com/
