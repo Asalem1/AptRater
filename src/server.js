@@ -76,6 +76,21 @@ app.get('/login/facebook/return',
   },
 );
 
+app.get('/login/google',
+  passport.authenticate('google', { scope: ['email', 'user_location'], session: false }),
+);
+app.get('/login/google/return',
+  passport.authenticate('google', { failureRedirect: '/login', session: false }),
+  (req, res) => {
+    const expiresIn = 60 * 60 * 24 * 180; // 180 days
+    const token = jwt.sign(req.user, config.auth.jwt.secret, { expiresIn });
+    res.cookie('id_token', token, { maxAge: 1000 * expiresIn, httpOnly: true });
+    res.redirect('/');
+  },
+);
+
+// app.post('/signup', passport.authenticate('local', { successRedirect: '/',failureRedirect: '/login' }))
+
 //
 // Register API middleware
 // -----------------------------------------------------------------------------

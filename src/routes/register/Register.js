@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Register.css';
+import { signup } from '../../actions/auth';
+import { connect } from 'react-redux'
 
 class Register extends React.Component {
   constructor(props) {
@@ -12,14 +14,14 @@ class Register extends React.Component {
     title: PropTypes.string.isRequired,
   };
 
-  // handleChange(event) {
-  //   this.setState({ [event.target.name]: event.target.value });
-  // }
+  handleChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
 
-  // handleSignup(event) {
-  //   event.preventDefault();
-  //   this.props.dispatch(signup(this.state.name, this.state.email, this.state.password));
-  // }
+  handleSignup(event) {
+    event.preventDefault();
+    this.props.dispatch(signup(this.state.name, this.state.email, this.state.password));
+  }
 
   // handleFacebook() {
   //   this.props.dispatch(facebookLogin())
@@ -35,7 +37,6 @@ class Register extends React.Component {
 
 
   render() {
-    console.log('here are the props in Register: ', this.state);
     return (
       <div className={s.root}>
         <div className={s.container}>
@@ -43,7 +44,7 @@ class Register extends React.Component {
             <div className="panel">
               <div className="panel-body">
                 <strong className={s.lineThrough}>Create an Account</strong>
-                <form method="post"/*onSubmit={this.handleSignup.bind(this)}*/>
+                <form method="post" onSubmit={this.handleSignup.bind(this)}>
                   <div className={s.formGroup}>
                     <label className={s.label} htmlFor="name">
                       Name:
@@ -54,7 +55,7 @@ class Register extends React.Component {
                       type="text"
                       name="name"
                       autoFocus
-                       /*onChange={this.handleChange.bind(this)}*/
+                      onChange={this.handleChange.bind(this)}
                        />
                   </div>
                   <div className={s.formGroup}>
@@ -67,7 +68,7 @@ class Register extends React.Component {
                       type="text"
                       name="usernameOrEmail"
                       autoFocus
-                       /*onChange={this.handleChange.bind(this)}*/
+                      onChange={this.handleChange.bind(this)}
                        />
                   </div>
                   <div className={s.formGroup}>
@@ -80,7 +81,7 @@ class Register extends React.Component {
                      type="text"
                      name="password"
                      autoFocus
-                      /*onChange={this.handleChange.bind(this)}*/
+                     onChange={this.handleChange.bind(this)}
                       />
                   </div>
                   <div className="form-group">
@@ -163,4 +164,10 @@ class Register extends React.Component {
   }
 }
 
-export default withStyles(s)(Register);
+const mapStateToProps = (state) => {
+  return {
+    messages: state.messages
+  };
+};
+
+export default connect(mapStateToProps)(Register);

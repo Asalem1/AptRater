@@ -13,7 +13,7 @@ class Login extends React.Component {
       <div className={s.root}>
         <div className={s.container}>
           <h1>{this.props.title}</h1>
-          <p className={s.lead}>Log in with your username or company email address.</p>
+          <p className={s.lead}>Login with your username or company email address.</p>
           <div className={s.formGroup}>
             <a className={s.facebook} href="/login/facebook">
               <svg
@@ -27,7 +27,7 @@ class Login extends React.Component {
                   d="M22 16l1-5h-5V7c0-1.544.784-2 3-2h2V0h-4c-4.072 0-7 2.435-7 7v4H7v5h5v14h6V16h4z"
                 />
               </svg>
-              <span>Log in with Facebook</span>
+              <span>Login with Facebook</span>
             </a>
           </div>
           <div className={s.formGroup}>
@@ -50,7 +50,7 @@ class Login extends React.Component {
                   '2.88.88 4 2 1 1 1 2.674 1 3 0 3-1.986 4-7 4z'}
                 />
               </svg>
-              <span>Log in with Google</span>
+              <span>Login with Google</span>
             </a>
           </div>
           <div className={s.formGroup}>
@@ -72,7 +72,7 @@ class Login extends React.Component {
                   '0-.268.008-.736 0-1 1.2-.868 2.172-2.058 3-3.292z'}
                 />
               </svg>
-              <span>Log in with Twitter</span>
+              <span>Login with Twitter</span>
             </a>
           </div>
           <strong className={s.lineThrough}>OR</strong>
