@@ -23,7 +23,6 @@ passport.use(new FacebookStrategy({
   passReqToCallback: true,
 }, (req, accessToken, refreshToken, profile, done) => {
   /* eslint-disable no-underscore-dangle */
-  console.log('here is the accessToken: ', accessToken)
   const loginName = 'facebook';
   const claimType = 'urn:facebook:access_token';
   const fooBar = async () => {
@@ -77,7 +76,11 @@ passport.use(new FacebookStrategy({
         ],
       });
       if (users.length) {
-        done(null, users[0]);
+        const user = users[0];
+        done(null, {
+          id: user.id,
+          email: user.email,
+        });
       } else {
         let user = await User.findOne({ where: { email: profile._json.email } });
         if (user) {
@@ -120,23 +123,6 @@ passport.use(new FacebookStrategy({
 
 export default passport;
 
-/*Through Local Storage*/
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-    console.log('in passport.js: ', username);
-    User.findOne({ username: username }, function (err, user) {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      if (!user.validPassword(password)) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
-    });
-  }
-));
-
 /**
  * Sign in with Google.
  */
@@ -148,7 +134,6 @@ passport.use(new GoogleStrategy({
   passReqToCallback: true,
 }, (req, accessToken, refreshToken, profile, done) => {
   /* eslint-disable no-underscore-dangle */
-  console.log('here is the accessToken: ', accessToken)
   const loginName = 'google';
   const claimType = 'urn:google:access_token';
   const fooBar = async () => {
@@ -158,7 +143,7 @@ passport.use(new GoogleStrategy({
         where: { name: loginName, key: profile.id },
       });
       if (userLogin) {
-        // There is already a Facebook account that belongs to you.
+        // There is already a Google account that belongs to you.
         // Sign in with that account or delete it, then link it with your current account.
         done();
       } else {
@@ -174,7 +159,7 @@ passport.use(new GoogleStrategy({
           profile: {
             displayName: profile.displayName,
             gender: profile._json.gender,
-            picture: `https://graph.facebook.com/${profile.id}/picture?type=large`,
+            picture: `https://graph.google.com/${profile.id}/picture?type=large`,
           },
         }, {
           include: [
@@ -202,7 +187,11 @@ passport.use(new GoogleStrategy({
         ],
       });
       if (users.length) {
-        done(null, users[0]);
+        const user = users[0];
+        done(null, {
+          id: user.id,
+          email: user.email,
+        });
       } else {
         let user = await User.findOne({ where: { email: profile._json.email } });
         if (user) {
@@ -222,7 +211,7 @@ passport.use(new GoogleStrategy({
             profile: {
               displayName: profile.displayName,
               gender: profile._json.gender,
-              picture: `https://graph.facebook.com/${profile.id}/picture?type=large`,
+              picture: `https://graph.google.com/${profile.id}/picture?type=large`,
             },
           }, {
             include: [
@@ -242,3 +231,22 @@ passport.use(new GoogleStrategy({
 
   fooBar().catch(done);
 }));
+
+
+/*Through Local Storage*/
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    User.findOne({ username: username }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
+
+/*TODO TWITTER*/

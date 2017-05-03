@@ -50,6 +50,7 @@ app.use(expressJwt({
 // Error handler for express-jwt
 app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   if (err instanceof Jwt401Error) {
+    console.error('There has been an error with your JWT, you need to clear your cookies');
     console.error('[express-jwt-error]', req.cookies.id_token);
     // `clearCookie`, otherwise user can't use web-app until cookie expires
     res.clearCookie('id_token');
@@ -75,13 +76,20 @@ app.get('/login/facebook/return',
     res.redirect('/');
   },
 );
+// passport.serializeUser(function(user, done) {
+//   done(null, user);
+// });
 
+// passport.deserializeUser(function(user, done) {
+//   done(null, user);
+// });
 app.get('/login/google',
-  passport.authenticate('google', { scope: ['email', 'user_location'], session: false }),
+  passport.authenticate('google', { scope : ['profile', 'email'] })
 );
 app.get('/login/google/return',
   passport.authenticate('google', { failureRedirect: '/login', session: false }),
   (req, res) => {
+    console.log('GOOGLE REQ: ', req);
     const expiresIn = 60 * 60 * 24 * 180; // 180 days
     const token = jwt.sign(req.user, config.auth.jwt.secret, { expiresIn });
     res.cookie('id_token', token, { maxAge: 1000 * expiresIn, httpOnly: true });
@@ -96,7 +104,7 @@ app.get('/login/google/return',
 // -----------------------------------------------------------------------------
 app.use('/graphql', expressGraphQL(req => ({
   schema,
-  graphiql: __DEV__,
+  graphiql: __DEV__, //true is also an option here
   rootValue: { request: req },
   pretty: __DEV__,
 })));
