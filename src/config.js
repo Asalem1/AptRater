@@ -39,6 +39,7 @@ module.exports = {
     google: {
       id: process.env.GOOGLE_CLIENT_ID || '587623544650-j55nt6u97inie09khns4dt5lhj1daa3s.apps.googleusercontent.com',
       secret: process.env.GOOGLE_CLIENT_SECRET || 'TGPJi3k1E6CqR4MreDfbwVac',
+      returnURL: process.env.GOOGLE_CLIENT_URL || 'http://localhost:3001/login/google/return',
     },
 
     // https://apps.twitter.com/

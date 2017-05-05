@@ -129,8 +129,8 @@ export default passport;
 passport.use(new GoogleStrategy({
   clientID: config.auth.google.id,
   clientSecret: config.auth.google.secret,
-  callbackURL: '/login/google/return',
-  profileFields: ['name', 'email', 'link', 'locale', 'timezone'],
+  callbackURL: config.auth.google.returnURL,
+  // profileFields: ['name', 'email', 'link', 'locale', 'timezone'],
   passReqToCallback: true,
 }, (req, accessToken, refreshToken, profile, done) => {
   /* eslint-disable no-underscore-dangle */
@@ -211,7 +211,7 @@ passport.use(new GoogleStrategy({
             profile: {
               displayName: profile.displayName,
               gender: profile._json.gender,
-              picture: `https://graph.google.com/${profile.id}/picture?type=large`,
+              picture: profile._json.image.url,
             },
           }, {
             include: [
