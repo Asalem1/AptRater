@@ -22,6 +22,10 @@ const config = {
     pathinfo: isVerbose,
   },
 
+  devServer: {
+    historyApiFallback: true //added to removeHash when using BrowseRouter
+  },
+
   module: {
     rules: [
       {
